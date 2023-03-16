@@ -9,8 +9,14 @@ function BlogList() {
   }, []);
 
   const fetchBlogs = async () => {
-    const response = await axios.get('api/v1/blogs');
+    const response = await axios.get('/blogs');
     setBlogs(response.data);
+  };
+
+  const handleDelete = async id => {
+    await axios.delete(`/blogs/${id}`);
+    setBlogs(blogs.filter(blog => blog.id !== id));
+    alert('Blog post deleted!');
   };
 
   return (
@@ -23,6 +29,7 @@ function BlogList() {
             <p>Category: {blog.category}</p>
             <p>Text: {blog.text}</p>
             <p>Author: {blog.author}</p>
+            <button onClick={() => handleDelete(blog.id)}>Delete</button>
           </li>
         ))}
       </ul>
