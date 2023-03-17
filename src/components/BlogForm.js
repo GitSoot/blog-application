@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 function BlogForm() {
   const [title, setTitle] = useState('');
@@ -17,7 +16,13 @@ function BlogForm() {
       author
     };
 
-    await axios.post('/blogs', blog);
+    await fetch('http://localhost:3000/api/v1/blogs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(blog)
+    });
 
     setTitle('');
     setCategory('');
@@ -29,7 +34,7 @@ function BlogForm() {
 
   return (
     <div>
-      <h2>Add a New Blog Post</h2>
+      <h2>Simple Blog Application</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title">Title:</label>
